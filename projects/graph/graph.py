@@ -11,30 +11,72 @@ class Graph:
         self.vertices = {}
 
     def add_vertex(self, vertex):
+        """
+        Add a vertex to the graph
+        """
         self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
+        """
+        Add a directed edge to the graph
+        """
         if v1 not in self.vertices:
-            self.add_vertex(v2)
+            self.add_vertex(v1)
 
         if v2 not in self.vertices:
-            self.add_vertex(v1)
+            self.add_vertex(v2)
+
         self.vertices[v1].add(v2)
-        self.vertices[v2].add(v1)
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
-        beginning from starting_vertex.
+        beginning from starting_vertex
         """
-        pass  # TODO
+        # make a queue
+        queue = Queue()
+        # make a visited set 
+        visited = set()
+        # put starting index in the queue
+        queue.enqueue(starting_vertex)
+        # while q isn't empty
+        while queue.size():
+        ## dequeue the item, it is our current item
+            node = queue.dequeue()
+            print(node)
+        ## mark current as visited
+            visited.add(node)
+        ## for each of the dequeued item's edges
+            for edge in self.vertices[node]:
+                # if not visited
+                if edge not in visited: 
+        ## put them in the queue  
+                    queue.enqueue(edge)        
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        # make a stack
+        stack = Stack()
+        # make a visited set
+        visited = set()
+        # put starting vertex in our stack
+        stack.push(starting_vertex)
+        # while the stack isn't empty
+        while stack.size():
+            ## pop off the top of the stack, it is our current item
+            node = stack.pop()
+            ## if not visited
+            if node not in visited:
+                print(node) ## print for fun
+                ## mark it as visited
+                visited.add(node)
+                ## for each of our current item's edges
+                for edge in self.vertices[node]:
+                ### put them on the stack
+                    stack.push(edge)
 
     def dft_recursive(self, starting_vertex):
         """
