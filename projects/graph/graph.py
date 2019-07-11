@@ -78,20 +78,23 @@ class Graph:
                     # put them on the stack
                     stack.push(edge)
 
-    def dft_recursive(self, starting_vertex, visited=None):
+    def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        if visited == None:
-            visited = set()
+        def dft_recurs(self, starting_vertex, visited=None):
+            if visited is None:
+                visited = set()
+            
+            visited.add(starting_vertex)
+            print(starting_vertex)
+            for child in self.vertices[starting_vertex]:
+                if child not in visited:
+                    dft_recurs(self, child, visited)
 
-        visited.add(starting_vertex)
-        print(starting_vertex)
-        for child in self.vertices[starting_vertex]:
-            if child not in visited:
-                self.dft_recursive(child, visited)
+        dft_recurs(self, starting_vertex)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
