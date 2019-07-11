@@ -27,6 +27,21 @@ class Graph:
             self.add_vertex(v2)
 
         self.vertices[v1].add(v2)
+    
+    def find_connected_comp(self, path):
+        ptr = len(path) - 1
+
+        while ptr:
+            node1 = path[ptr]
+            node2 = path[ptr - 1]
+
+            if node1 not in self.vertices[node2]:
+                path.pop(ptr-1)
+
+            ptr-= 1
+
+        return path
+
 
     def bft(self, starting_vertex):
         """
@@ -102,7 +117,34 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        # queue = [7]
+        # path = [1,2,3,4,5,6]
+        # find_connected_comp
+        # return [1,2,4,6]
+
+        queue = []
+        path = []
+        visited = set()
+
+        queue.append(starting_vertex)
+        visited.add(starting_vertex)
+
+        while len(queue):
+        # condition to check if current node is equal destination_vertex
+            node = queue[0]
+
+        if node == destination_vertex:
+            path.append(node)
+            return self.find_connected_comp(path)
+        else:
+            for edge in self.vertices[node]:
+                if edge not in visited:
+                    queue.append(edge)
+                    visited.add(edge)
+        
+            path.append(queue.pop(0))
+    
+        return None
 
     def dfs(self, starting_vertex, destination_vertex):
         """
