@@ -35,23 +35,23 @@ class Graph:
         """
         # make a queue
         queue = Queue()
-        # make a visited set 
+        # make a visited set
         visited = set()
         # put starting index in the queue
         queue.enqueue(starting_vertex)
         # while q isn't empty
         while queue.size():
-        ## dequeue the item, it is our current item
+            # dequeue the item, it is our current item
             node = queue.dequeue()
             print(node)
-        ## mark current as visited
+        # mark current as visited
             visited.add(node)
-        ## for each of the dequeued item's edges
+        # for each of the dequeued item's edges
             for edge in self.vertices[node]:
                 # if not visited
-                if edge not in visited: 
-        ## put them in the queue  
-                    queue.enqueue(edge)        
+                if edge not in visited:
+                    # put them in the queue
+                    queue.enqueue(edge)
 
     def dft(self, starting_vertex):
         """
@@ -66,25 +66,32 @@ class Graph:
         stack.push(starting_vertex)
         # while the stack isn't empty
         while stack.size():
-            ## pop off the top of the stack, it is our current item
+            # pop off the top of the stack, it is our current item
             node = stack.pop()
-            ## if not visited
+            # if not visited
             if node not in visited:
-                print(node) ## print for fun
-                ## mark it as visited
+                print(node)  # print for fun
+                # mark it as visited
                 visited.add(node)
-                ## for each of our current item's edges
+                # for each of our current item's edges
                 for edge in self.vertices[node]:
-                ### put them on the stack
+                    # put them on the stack
                     stack.push(edge)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        if visited == None:
+            visited = set()
+
+        visited.add(starting_vertex)
+        print(starting_vertex)
+        for child in self.vertices[starting_vertex]:
+            if child not in visited:
+                self.dft_recursive(child, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
