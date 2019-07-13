@@ -31,7 +31,7 @@ class Graph():
 
         raise IndexError("Vertices not found")
         
-def dfs(self, starting_vertex):
+    def dfs(self, starting_vertex):
         # Create empty set
         vertices = set()
         # Create empty Stack
@@ -79,4 +79,15 @@ def dfs(self, starting_vertex):
         return parent_vertex
 
 def earliest_ancestor(ancestors, starting_node):
-    pass
+    graph = Graph()
+
+    for link in ancestors:
+        if not graph.isvertex(link[0]):
+            graph.add_vertex(link[0])
+
+        if not graph.isvertex(link[1]):
+            graph.add_vertex(link[1])
+
+        graph.add_edge(link[1], link[0])
+
+    return graph.dfs(starting_node)
