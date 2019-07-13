@@ -135,7 +135,32 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        # make a stack
+        stack = Stack()
+        # make a visited set
+        visited = set()
+        # push on the stack the PATH to that node
+        stack.push([starting_vertex])
+        # while the stack isn't empty:
+        while stack.size() > 0:
+        ## pop the PATH
+            path = stack.pop()
+        ## the last thing in the path is our current item
+            node = path[-1]
+        ## if it's not visited:
+            if node not in visited:
+        ## CHECK if it's the target
+                if node == destination_vertex:
+        #### if so, return the path
+                    return path
+                ### for each of the node's neighbor's
+                for neighbor in self.vertices[node]:
+                    #### copy the path
+                    copy_path = path[:]
+                    #### add the neighbor to the path
+                    copy_path.append(neighbor)
+                    #### enqueue the PATH_COPY
+                    stack.push(copy_path)
 
 
 if __name__ == '__main__':
