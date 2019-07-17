@@ -60,9 +60,10 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-
+        for i in range(0, numUsers):
+            self.addUser(f"User {i + 1}")
         # Create friendships
-
+        
     def getAllSocialPaths(self, userID):
         """
         Takes a user's userID as an argument
