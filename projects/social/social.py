@@ -1,4 +1,17 @@
+import random
 
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
 
 class User:
     def __init__(self, name):
@@ -47,8 +60,24 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-
+        for i in range(0, numUsers):
+            self.addUser(f"User {i + 1}")
         # Create friendships
+        # Generate all possible friendship combinations
+        possibleFriendships = []
+        # Avoid duplicates by ensuring the first number is always smaller than the second number
+        for userID in self.users:
+            for friendID in range(userID + 1, self.lastID + 1):
+                possibleFriendships.append((userID,friendID))
+        # Shuffle the possible frienships 
+        random.shuffle(possibleFriendships)
+        # Create friendships for the first X pairs of the list
+        # X = Friendships_needed
+        # Friendships_needed = numusers * (avgFriendships // 2)
+        # Need to divide by 2 since each addFriendship() creates 2 friendships
+        for i in range(numUsers * (avgFriendships // 2)):
+            friendships = possibleFriendships[i]
+            self.addFriendship(friendships[0], friendships[1])
 
     def getAllSocialPaths(self, userID):
         """
@@ -61,8 +90,21 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
-        return visited
+        queue = Queue()
+        queue.enqueue([userID])
 
+        while queue.size() > 0:
+            path = queue.dequeue()
+            friendID = path[-1]
+
+            if friendID not in visited:
+                visited[friendID] = path
+
+                for next_friendID in self.friendships[friendID]:
+                    new_path = path + [next_friendID]
+                    queue.enqueue(new_path)
+        
+        return visited
 
 if __name__ == '__main__':
     sg = SocialGraph()
